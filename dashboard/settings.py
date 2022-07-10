@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8y8-rb!j6b@rzpe7^mp*7bjgcn5$a!dx2g-fd#ba&g#fs33b+^'
+SECRET_KEY = '8x8-rb!h6%@rzpe7^mp*7djgfn5$a!dx2g-fd#ba&g#fs3kb+^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -28,6 +29,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     '0.0.0.0',
     '127.0.0.1',
+    'pawsforthoughtmetrics.herokuapp.com',
 ]
 
 
@@ -43,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'admin_pages',
+    'site_pages',
     'users',
+    'json_tag'
 ]
 
 MIDDLEWARE = [
@@ -103,6 +107,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+#db_from_env = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

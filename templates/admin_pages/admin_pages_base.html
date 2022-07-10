@@ -7,7 +7,8 @@
   <link href='https://fonts.googleapis.com/css?family=Muli' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">  
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
+  <link rel="stylesheet" href="{% static 'admin_pages/css/font-awesome.min.css' %}"> 
   <link rel="stylesheet" href="{% static 'admin_pages/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="icon" href="{% static 'images/favicon.ico' %}">
@@ -39,54 +40,59 @@
 </head>
 
 <body class="admin_pages" style="font-family: 'Muli', sans-serif;">
-<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'admin_pages:admin_index' %}">
-      {% load static %}
-      <img src="{% static 'nav_image/nav_image.png' %}"
-        alt="Navigation icon" style="{{ navigation_img_size }}">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'site_pages:index' %}">
+        {% load static %}
+        <img src="{% static 'nav_image/nav_image.png' %}"
+          alt="Navigation icon" style="{{ navigation_img_size }}">
+      </a>
+    </div>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <div class="profile-dropdown">
+          <div class="container">
+            {% block profile_name_and_role %}
+            {% endblock profile_name_and_role %}
+          </div>
+          <button class="profile-dropbtn" onclick="toggleDropdown()" style="padding: %; border-radius: 5px;">
+            <img src="/static/images/{{ profile.profile_img_name }}"
+            alt="Profile Image" width="90px;" height="90px;" style="border-radius: 3px;">
+          </button>
+          <div class="profile-dropdown-content" id="profile-dropdown-content" style="padding: 5%;">
+            {% block profile_dropdown_links %}
+            {% endblock profile_dropdown_links %}
+            <a href="{% url 'users:logout' %}">Logout</a>
+          </div>
+      </li>
+    </ul>
+  </nav>
+  <div class="text-center">
+    <a class="text-dark nav-link" href="{% url 'site_pages:index' %}"
+        style="background-color: #FFD9AB; font-weight: bold;">
+        VIEW METRICS HOME
     </a>
   </div>
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <div class="profile-dropdown">
-        <div class="container">
-          {% block profile_name_and_role %}
-          {% endblock profile_name_and_role %}
-        </div>
-        <button class="profile-dropbtn" onclick="toggleDropdown()" style="padding: %; border-radius: 5px;">
-          <img src="/static/images/{{ profile.profile_img_name }}"
-          alt="Profile Image" width="90px;" height="90px;" style="border-radius: 3px;">
-        </button>
-        <div class="profile-dropdown-content" id="profile-dropdown-content" style="padding: 5%;">
-          {% block profile_dropdown_links %}
-          {% endblock profile_dropdown_links %}
-          <a href="{% url 'users:logout' %}">Logout</a>
-        </div>
-    </li>
-  </ul>
-  
-</nav>
 {% block content %} {% endblock content %}
-<script>
-  function toggleDropdown() {
-    document.getElementById("profile-dropdown-content").classList.toggle("show");
-  }
+  <script>
+    function toggleDropdown() {
+      document.getElementById("profile-dropdown-content").classList.toggle("show");
+    }
 
-  // Close the dropdown menu if the user clicks outside of it
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
       }
-    }
-  } 
-</script>
+    } 
+  </script>
 </body>
 
 </html>
